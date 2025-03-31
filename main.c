@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 
 void swap(int *a, int *b) {
     int temp = *a;
