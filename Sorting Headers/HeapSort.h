@@ -3,11 +3,11 @@ void maxHeapify(int array[], int parentIndex, int length){
     int leftChildIndex = (2*parentIndex) + 1;
     int rightChildIndex = (2*parentIndex) + 2;
     int maxIndex = parentIndex;
-    if (leftChildIndex <= length && array[leftChildIndex] > array[parentIndex]){
+    if (leftChildIndex < length && array[leftChildIndex] > array[parentIndex]){
         maxIndex = leftChildIndex;
     }
 
-    if (rightChildIndex <= length && array[rightChildIndex] > array[maxIndex]){
+    if (rightChildIndex < length && array[rightChildIndex] > array[maxIndex]){
         maxIndex = rightChildIndex;
     }
 
