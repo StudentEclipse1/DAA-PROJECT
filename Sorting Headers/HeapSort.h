@@ -1,9 +1,3 @@
-// Function to swap two elements
-void swap(int *a, int *b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
 
 // Function to heapify a subtree rooted at node i
 void heapify(int arr[], int n, int i) {
