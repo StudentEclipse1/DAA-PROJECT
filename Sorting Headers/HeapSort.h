@@ -1,40 +1,37 @@
+void maxHeapify(int array[], int parentIndex, int length){
 
-// Function to heapify a subtree rooted at node i
-void heapify(int arr[], int n, int i) {
-    int largest = i;
-    int left = 2 * i + 1;
-    int right = 2 * i + 2;
-
-    // Check if left child exists and is greater than root
-    if (left < n && arr[left] > arr[largest]) {
-        largest = left;
+    int leftChildIndex = (2*parentIndex) + 1;
+    int rightChildIndex = (2*parentIndex) + 2;
+    int maxIndex = parentIndex;
+    if (leftChildIndex <= length && array[leftChildIndex] > array[parentIndex]){
+        maxIndex = leftChildIndex;
     }
 
-    // Check if right child exists and is greater than the current largest
-    if (right < n && arr[right] > arr[largest]) {
-        largest = right;
+    if (rightChildIndex <= length && array[rightChildIndex] > array[maxIndex]){
+        maxIndex = rightChildIndex;
     }
 
-    // If largest is not root, swap and continue heapifying
-    if (largest != i) {
-        swap(&arr[i], &arr[largest]);
-        heapify(arr, n, largest);
+    if (maxIndex != parentIndex){
+        swap(&array[maxIndex], &array[parentIndex]);
+        maxHeapify(array, maxIndex, length);
     }
 }
 
-// Function to perform Heap Sort
-void heapSort(int arr[], int n) {
-    // Build max heap
-    for (int i = n / 2 - 1; i >= 0; i--) {
-        heapify(arr, n, i);
+void buildMaxHeap(int array[], int n){
+    for(int i = (n/2)-1; i>=0; i--){
+        maxHeapify(array, i, n);
     }
+}
 
-    // Extract elements from heap one by one
-    for (int i = n - 1; i >= 0; i--) {
-        // Move current root to end
-        swap(&arr[0], &arr[i]);
+void heapSort(int array[], int size){
 
-        // Heapify the reduced heap
-        heapify(arr, i, 0);
+    buildMaxHeap(array, size);
+    int heapSize = size-1;
+
+
+    for (int i= heapSize ; i>0; i--){
+        swap(&array[i], &array[0]);
+        heapSize--;
+        maxHeapify(array, 0, heapSize);
     }
 }
