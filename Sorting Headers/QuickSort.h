@@ -1,3 +1,4 @@
+extern void swap(int *a, int *b);
 int partition(int array[], int start, int end){
 
     int pivot = array[end];
