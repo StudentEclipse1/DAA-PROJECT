@@ -1,3 +1,5 @@
+extern void swap(int *a, int *b);
+
 void maxHeapify(int array[], int parentIndex, int length){
 
     int leftChildIndex = (2*parentIndex) + 1;
