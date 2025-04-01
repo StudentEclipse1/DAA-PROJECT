@@ -42,7 +42,7 @@ void print_arr(int arr[], int n) {
 
 //Print out a usage if args were incorrect, or args was help
 void print_usage(char *prog_name) {
-    fprintf(stderr, "Usage: %s (-r | -s=<X>) [-m=<MAX_RANGE>] <N>\n", prog_name);
+    fprintf(stderr, "Usage: %s (-r | -s=<X>) [-m=<MAX_RANGE>] [-o=\"file-name\"] <N>\n", prog_name);
     fprintf(stderr, "Gives the avg. execution time for Selection, Bubble, Insertion, Merge, Heap, and Quick sort on array specified by user.\n");
     fprintf(stderr, "Examples: %s -r -m=32768 100\n", prog_name);
     fprintf(stderr, "          %s -s=20 1000\n", prog_name);
@@ -51,24 +51,31 @@ void print_usage(char *prog_name) {
     fprintf(stderr, "\n<N> = Number of integers to be sorted\n");
     fprintf(stderr, "<X> = The number the sequence starts from, must be positive.\n");
     fprintf(stderr, "<MAX_RANGE> = Specified max_range for array values, can be any positive number from 1 to INT_MAX.\n");
+    fprintf(stderr, "\"file-name\" = Output file destination, must contain no whitespace and can include an extension (e.g. test.csv).\n");
     fprintf(stderr, "\n\t-r Assigns random values to array from the range [0, <MAX_RANGE>], by default MAX_RANGE=INT_MAX.\n");
     fprintf(stderr, "\t-s Assigns the array with asequence of values starting from <X>.\n");
     fprintf(stderr, "\t-m Sets the limit for the array values.\n");
+    fprintf(stderr, "\t-o Outputs the result into a desired file type, .csv recommended for convenient table formatting.\n");
 
     exit(1);
 }
 
-void random_runtimes(int arr[], unsigned long int n, int max_range) {
+void random_runtimes(int arr[], unsigned long int n, int max_range, int output_to_file, FILE* outfile) {
     //Computes the execution time for the 6 sort algos on random array input
     //Prints a table to terminal
-    printf("\tResult of the Experiment for Random input, N=%lu\n", n);
+    printf("\tResult of the Experiment for RANDOM input: N=%lu\n", n);
     printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
     printf("| Sorting Algorithm |    Run 1    |    Run 2    |    Run 3    |    Run 4    |    Run 5    | Avg. Time for N = %lu\n", n);
     printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    if(output_to_file) {
+        fprintf(outfile, "Result of the Experiment for RANDOM input: N=%lu\n", n);
+        fprintf(outfile, "Sorting Algorithm,Run 1,Run 2,Run 3,Run 4,Run 5,Avg. Time for N = %lu\n", n);
+    }
 
     clock_t start, end;
     double cpu_time_used, total_used=0.0;
     printf("| Selection Sort    | ");
+    if(output_to_file) fprintf(outfile, "Selection Sort,");
     //Selection Sort
     for(int i=0; i<5; i++) {
         generate_n_randoms(arr, n, max_range);
@@ -77,13 +84,16 @@ void random_runtimes(int arr[], unsigned long int n, int max_range) {
         end = clock();
         cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
         printf("%10lfs | ", cpu_time_used);
+        if(output_to_file) fprintf(outfile, "%lfs,", cpu_time_used);
         total_used += cpu_time_used;
     }
     printf("%lfs\n", total_used/5);
+    if(output_to_file) fprintf(outfile, "%lfs\n", total_used/5);
     printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
     total_used=0.0;
 
     printf("| Insertion Sort    | ");
+    if(output_to_file) fprintf(outfile, "Insertion Sort,");
     //Insertion Sort
     for(int i=0; i<5; i++) {
         generate_n_randoms(arr, n, max_range);
@@ -92,13 +102,16 @@ void random_runtimes(int arr[], unsigned long int n, int max_range) {
         end = clock();
         cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
         printf("%10lfs | ", cpu_time_used);
+        if(output_to_file) fprintf(outfile, "%lfs,", cpu_time_used);
         total_used += cpu_time_used;
     }
     printf("%lfs\n", total_used/5);
+    if(output_to_file) fprintf(outfile, "%lfs\n", total_used/5);
     printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
     total_used=0.0;
 
     printf("| Heap Sort         | ");
+    if(output_to_file) fprintf(outfile, "Heap Sort,");
     //Heap Sort
     for(int i=0; i<5; i++) {
         generate_n_randoms(arr, n, max_range);
@@ -107,13 +120,16 @@ void random_runtimes(int arr[], unsigned long int n, int max_range) {
         end = clock();
         cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
         printf("%10lfs | ", cpu_time_used);
+        if(output_to_file) fprintf(outfile, "%lfs,", cpu_time_used);
         total_used += cpu_time_used;
     }
     printf("%lfs\n", total_used/5);
+    if(output_to_file) fprintf(outfile, "%lfs\n", total_used/5);
     printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
     total_used=0.0;
 
     printf("| Merge Sort        | ");
+    if(output_to_file) fprintf(outfile, "Merge Sort,");
     //Merge Sort  
     for(int i=0; i<5; i++) {
         generate_n_randoms(arr, n, max_range);
@@ -122,13 +138,16 @@ void random_runtimes(int arr[], unsigned long int n, int max_range) {
         end = clock();
         cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
         printf("%10lfs | ", cpu_time_used);
+        if(output_to_file) fprintf(outfile, "%lfs,", cpu_time_used);
         total_used += cpu_time_used;
     }
     printf("%lfs\n", total_used/5);
+    if(output_to_file) fprintf(outfile, "%lfs\n", total_used/5);
     printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
     total_used=0.0;
 
     printf("| Quick Sort        | ");
+    if(output_to_file) fprintf(outfile, "Quick Sort,");
     //Quick Sort  
     for(int i=0; i<5; i++) {
         generate_n_randoms(arr, n, max_range);
@@ -137,18 +156,123 @@ void random_runtimes(int arr[], unsigned long int n, int max_range) {
         end = clock();
         cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
         printf("%10lfs | ", cpu_time_used);
+        if(output_to_file) fprintf(outfile, "%lfs,", cpu_time_used);
         total_used += cpu_time_used;
     }
     printf("%lfs\n", total_used/5);
+    if(output_to_file) fprintf(outfile, "%lfs\n", total_used/5);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    total_used=0.0;
+}
+
+void sequenced_runtimes(int arr[], unsigned long int n, int seq_start, int output_to_file, FILE* outfile) {
+    //Computes the execution time for the 6 sort algos on sequenced array input
+    //Prints a table to terminal
+    printf("\tResult of the Experiment for SEQUENCED input: N=%lu\n", n);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("| Sorting Algorithm |    Run 1    |    Run 2    |    Run 3    |    Run 4    |    Run 5    | Avg. Time for N = %lu\n", n);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+
+    if(output_to_file) {
+        fprintf(outfile, "Result of the Experiment for SEQUENCED input: N=%lu\n", n);
+        fprintf(outfile, "Sorting Algorithm,Run 1,Run 2,Run 3,Run 4,Run 5,Avg. Time for N = %lu\n", n);
+    }
+
+    clock_t start, end;
+    double cpu_time_used, total_used=0.0;
+    printf("| Selection Sort    | ");
+    //Selection Sort
+    for(int i=0; i<5; i++) {
+        generate_n_sequence(arr, n, seq_start);
+        start = clock();
+        selectionSort(arr, n);
+        end = clock();
+        cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
+        printf("%10lfs | ", cpu_time_used);
+        if(output_to_file) fprintf(outfile, "%lfs,", cpu_time_used);
+        total_used += cpu_time_used;
+    }
+    printf("%lfs\n", total_used/5);
+    if(output_to_file) fprintf(outfile, "%lfs\n", total_used/5);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    total_used=0.0;
+
+    printf("| Insertion Sort    | ");
+    //Insertion Sort
+    for(int i=0; i<5; i++) {
+        generate_n_sequence(arr, n, seq_start);
+        start = clock();
+        insertionSort(arr, n);
+        end = clock();
+        cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
+        printf("%10lfs | ", cpu_time_used);
+        if(output_to_file) fprintf(outfile, "%lfs,", cpu_time_used);
+        total_used += cpu_time_used;
+    }
+    printf("%lfs\n", total_used/5);
+    if(output_to_file) fprintf(outfile, "%lfs\n", total_used/5);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    total_used=0.0;
+
+    printf("| Heap Sort         | ");
+    //Heap Sort
+    for(int i=0; i<5; i++) {
+        generate_n_sequence(arr, n, seq_start);
+        start = clock();
+        heapSort(arr, n);
+        end = clock();
+        cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
+        printf("%10lfs | ", cpu_time_used);
+        if(output_to_file) fprintf(outfile, "%lfs,", cpu_time_used);
+        total_used += cpu_time_used;
+    }
+    printf("%lfs\n", total_used/5);
+    if(output_to_file) fprintf(outfile, "%lfs\n", total_used/5);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    total_used=0.0;
+
+    printf("| Merge Sort        | ");
+    //Merge Sort
+    for(int i=0; i<5; i++) {
+        generate_n_sequence(arr, n, seq_start);
+        start = clock();
+        mergeSort(arr, 0, n);
+        end = clock();
+        cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
+        printf("%10lfs | ", cpu_time_used);
+        if(output_to_file) fprintf(outfile, "%lfs,", cpu_time_used);
+        total_used += cpu_time_used;
+    }
+    printf("%lfs\n", total_used/5);
+    if(output_to_file) fprintf(outfile, "%lfs\n", total_used/5);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    total_used=0.0;
+
+    printf("| Quick Sort        | ");
+    //QuickSort
+    for(int i=0; i<5; i++) {
+        generate_n_sequence(arr, n, seq_start);
+        start = clock();
+        quickSort(arr, 0, n);
+        end = clock();
+        cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
+        printf("%10lfs | ", cpu_time_used);
+        if(output_to_file) fprintf(outfile, "%lfs,", cpu_time_used);
+        total_used += cpu_time_used;
+    }
+    printf("%lfs\n", total_used/5);
+    if(output_to_file) fprintf(outfile, "%lfs\n", total_used/5);
     printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
     total_used=0.0;
 }
 
 int main(int argc, char* argv[]) {
     int *arr, seq_start=1;
-    int is_random=0, is_sequenced=0;
+    int is_random=0, is_sequenced=0, output_to_file=0;
     int i;
     unsigned long int n, max_range = RAND_MAX;
+    FILE* outfile = NULL;
+    char out_name[1000];
 
     //Check for leading '-' in argv to see user specification
     for(i=1; i<argc; i++) {
@@ -184,6 +308,14 @@ int main(int argc, char* argv[]) {
                     print_usage(argv[0]);
                
                 break;
+            case 'o':
+                //Get the file name after the '=' sign
+                output_to_file=1;
+                if(( sscanf(&(argv[i][2]), "=%[^']", out_name)) != 1)  {
+                    print_usage(argv[0]);
+                }
+                outfile = fopen(out_name, "w");
+                break;
             default:
                 print_usage(argv[0]);
         }
@@ -207,15 +339,14 @@ int main(int argc, char* argv[]) {
     printf("Hello, World!, Max Range: %lu\n", max_range);
 
     if(is_random) {
-        random_runtimes(arr, n, max_range);
+        random_runtimes(arr, n, max_range, output_to_file, outfile);
     }
 
     if(is_sequenced) {
-        generate_n_sequence(arr, n, seq_start);
-        printf("Sequenced Array: \n");
-        print_arr(arr, n);
+        sequenced_runtimes(arr, n, seq_start, output_to_file, outfile);
     }
 
+    fclose(outfile);
 /*testing
         clock_t start, end;
         generate_n_randoms(arr, n, max_range);
