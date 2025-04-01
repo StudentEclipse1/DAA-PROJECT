@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Sorting Headers/HeapSort.h"
+#include "Sorting Headers/Selection-Insertion.h"
+#include "Sorting Headers/MergeSort.h"
+#include "Sorting Headers/QuickSort.h"
 
 void swap(int *a, int *b) {
     int temp = *a;
@@ -13,6 +16,7 @@ void swap(int *a, int *b) {
 //Assigns random values to arr from the range [0, max_range]
 //max_range is inclusive, by default it is RAND_MAX defined in stdlib.h (usually same as INT_MAX)
 void generate_n_randoms(int arr[], int n, int max_range) {
+    srand(time(NULL));  //Give rand() a new seed each time this is called.
     if(max_range > RAND_MAX) {
         fprintf(stderr, "Max range input is larger than the max for Random Integers (%d)\n", RAND_MAX);
         exit(1);
@@ -54,13 +58,97 @@ void print_usage(char *prog_name) {
     exit(1);
 }
 
+void random_runtimes(int arr[], unsigned long int n, int max_range) {
+    //Computes the execution time for the 6 sort algos on random array input
+    //Prints a table to terminal
+    printf("\tResult of the Experiment for Random input, N=%lu\n", n);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("| Sorting Algorithm |    Run 1    |    Run 2    |    Run 3    |    Run 4    |    Run 5    | Avg. Time for N = %lu\n", n);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+
+    clock_t start, end;
+    double cpu_time_used, total_used=0.0;
+    printf("| Selection Sort    | ");
+    //Selection Sort
+    for(int i=0; i<5; i++) {
+        generate_n_randoms(arr, n, max_range);
+        start = clock();
+        selectionSort(arr, n);
+        end = clock();
+        cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
+        printf("%10lfs | ", cpu_time_used);
+        total_used += cpu_time_used;
+    }
+    printf("%lfs\n", total_used/5);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    total_used=0.0;
+
+    printf("| Insertion Sort    | ");
+    //Insertion Sort
+    for(int i=0; i<5; i++) {
+        generate_n_randoms(arr, n, max_range);
+        start = clock();
+        insertionSort(arr, n);
+        end = clock();
+        cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
+        printf("%10lfs | ", cpu_time_used);
+        total_used += cpu_time_used;
+    }
+    printf("%lfs\n", total_used/5);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    total_used=0.0;
+
+    printf("| Heap Sort         | ");
+    //Heap Sort
+    for(int i=0; i<5; i++) {
+        generate_n_randoms(arr, n, max_range);
+        start = clock();
+        heapSort(arr, n);
+        end = clock();
+        cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
+        printf("%10lfs | ", cpu_time_used);
+        total_used += cpu_time_used;
+    }
+    printf("%lfs\n", total_used/5);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    total_used=0.0;
+
+    printf("| Merge Sort        | ");
+    //Merge Sort  
+    for(int i=0; i<5; i++) {
+        generate_n_randoms(arr, n, max_range);
+        start = clock();
+        mergeSort(arr, 0, n);
+        end = clock();
+        cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
+        printf("%10lfs | ", cpu_time_used);
+        total_used += cpu_time_used;
+    }
+    printf("%lfs\n", total_used/5);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    total_used=0.0;
+
+    printf("| Quick Sort        | ");
+    //Quick Sort  
+    for(int i=0; i<5; i++) {
+        generate_n_randoms(arr, n, max_range);
+        start = clock();
+        quickSort(arr, 0, n);
+        end = clock();
+        cpu_time_used = ((double) (end-start))/CLOCKS_PER_SEC;
+        printf("%10lfs | ", cpu_time_used);
+        total_used += cpu_time_used;
+    }
+    printf("%lfs\n", total_used/5);
+    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    total_used=0.0;
+}
+
 int main(int argc, char* argv[]) {
     int *arr, seq_start=1;
     int is_random=0, is_sequenced=0;
     int i;
     unsigned long int n, max_range = RAND_MAX;
-    clock_t start, end;
-    double cpu_time_used;
 
     //Check for leading '-' in argv to see user specification
     for(i=1; i<argc; i++) {
@@ -119,16 +207,7 @@ int main(int argc, char* argv[]) {
     printf("Hello, World!, Max Range: %lu\n", max_range);
 
     if(is_random) {
-        generate_n_randoms(arr, n, max_range);
-        printf("Random Array: \n");
-        //print_arr(arr, n);
-        
-        start = clock();
-        heapSort(arr, n);
-        end = clock();
-        printf("Sorted Array:\n");
-        //print_arr(arr, n);
-        printf("EXECUTION TIME: %lf\n", ((double) (end-start))/CLOCKS_PER_SEC);
+        random_runtimes(arr, n, max_range);
     }
 
     if(is_sequenced) {
@@ -137,6 +216,18 @@ int main(int argc, char* argv[]) {
         print_arr(arr, n);
     }
 
-
+/*testing
+        clock_t start, end;
+        generate_n_randoms(arr, n, max_range);
+        printf("Random Array: \n");
+        print_arr(arr, n);
+        
+        start = clock();
+        mergeSort(arr, 0, n);
+        end = clock();
+        printf("Sorted Array:\n");
+        print_arr(arr, n);
+        printf("EXECUTION TIME: %lf\n", ((double) (end-start))/CLOCKS_PER_SEC);
+*/
     return 0;
 }

@@ -1,3 +1,5 @@
+//sa main nalang pala ilalagay clock kaya inalis ko lang
+
 void merge(int arr[], int l, int m, int r)
 {
     int i, j, k;
@@ -39,12 +41,8 @@ void merge(int arr[], int l, int m, int r)
     }
 }
 
-double mergeSort(int arr[], int l, int r)
+void mergeSort(int arr[], int l, int r)
 {
-	clock_t start, end;
-	double cpu_time_used;
-	start = clock();
-	
     if (l < r) {
         int m = l + (r - l) / 2;
 
@@ -53,9 +51,6 @@ double mergeSort(int arr[], int l, int r)
 
         merge(arr, l, m, r);
     }
-    end = clock();
-   	cpu_time_used = ((double) (end-start)) / CLOCKS_PER_SEC;
-return cpu_time_used;
 }
 
 /*
