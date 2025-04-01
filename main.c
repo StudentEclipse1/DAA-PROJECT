@@ -2,6 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
+#include "Sorting Headers/HeapSort.h"
 
 void swap(int *a, int *b) {
     int temp = *a;
@@ -58,6 +59,8 @@ int main(int argc, char* argv[]) {
     int is_random=0, is_sequenced=0;
     int i;
     unsigned long int n, max_range = RAND_MAX;
+    clock_t start, end;
+    double cpu_time_used;
 
     //Check for leading '-' in argv to see user specification
     for(i=1; i<argc; i++) {
@@ -118,7 +121,14 @@ int main(int argc, char* argv[]) {
     if(is_random) {
         generate_n_randoms(arr, n, max_range);
         printf("Random Array: \n");
-        print_arr(arr, n);
+        //print_arr(arr, n);
+        
+        start = clock();
+        heapSort(arr, n);
+        end = clock();
+        printf("Sorted Array:\n");
+        //print_arr(arr, n);
+        printf("EXECUTION TIME: %lf\n", ((double) (end-start))/CLOCKS_PER_SEC);
     }
 
     if(is_sequenced) {
@@ -126,6 +136,7 @@ int main(int argc, char* argv[]) {
         printf("Sequenced Array: \n");
         print_arr(arr, n);
     }
+
 
     return 0;
 }
