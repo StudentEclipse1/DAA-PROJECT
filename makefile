@@ -1,2 +1,2 @@
 main : main.c
-	gcc main.c -o test -Wall -Wextra -pedantic
+	gcc main.c runtimes.c -o test -Wall -Wextra -pedantic

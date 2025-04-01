@@ -1,12 +1,11 @@
-//sa main nalang pala ilalagay clock kaya inalis ko lang
 
 void merge(int arr[], int l, int m, int r)
 {
     int i, j, k;
     int n1 = m - l + 1;
     int n2 = r - m;
-    
-    int L[n1], R[n2];
+    //gin change ko lang imbes na L[n1]/L[n2] sa malloc nalang magabigay
+    int *L = malloc(sizeof(int)*n1), *R = malloc(sizeof(int) * n2);
     
     for (i = 0; i < n1; i++)
         L[i] = arr[l + i];

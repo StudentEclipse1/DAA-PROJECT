@@ -1,6 +1,4 @@
-
 // Blame me: Renz
-// Sa main nalang pala ilalagay lahat ng clock, mb: juan
 
     //Palipat as local variables pag mali
    // clock_t start, end;
