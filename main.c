@@ -34,7 +34,7 @@ void print_usage(char *prog_name) {
     fprintf(stderr, "\t-s Assigns the array with asequence of values starting from <X>.\n");
     fprintf(stderr, "\t-m Sets the limit for the array values.\n");
     fprintf(stderr, "\t-o Outputs the result into a desired file type, .csv recommended for convenient table formatting.\n");
-    fprintf(stderr, "\t-p Output array values before and after sorting, file-name should not include extensions for this.");
+    fprintf(stderr, "\t-p Output array values before and after sorting, file-name should not include extensions for this.\n");
 
     exit(1);
 }
@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
     int *arr, seq_start=1;
     int is_random=0, is_sequenced=0;
     int i;
-    unsigned long int n, max_range = RAND_MAX;
+    unsigned long int n=0, max_range = RAND_MAX;
     FILE* outfile = NULL;
     char out_name[1000], arr_out_name[1000];
     seed = time(NULL);  //init seed value
@@ -74,8 +74,8 @@ int main(int argc, char* argv[]) {
                 //Get the sequence start after the '=' sign
                 if((sscanf(&(argv[i][2]), "=%d", &seq_start)) != 1) 
                     print_usage(argv[0]);
-                if(n+seq_start > __INT_MAX__) {
-                    fprintf(stderr, "Input cannot have N + X > INT+MAX (%d).\n", __INT_MAX__);
+                if(n+(unsigned long) seq_start > __INT_MAX__) {
+                    fprintf(stderr, "Input cannot have N(%lu) + X(%d) > INT+MAX (%d).\n", n, seq_start, __INT_MAX__);
                     exit(1);
                 }
 
