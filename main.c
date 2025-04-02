@@ -13,6 +13,7 @@
 
 int output_to_file=0, output_arr_to_file=0;
 unsigned int seed;
+int selection=1, insertion=1, bubble=1, merges=1, heap=1, quick=1;
 
 void swap(int *a, int *b) {
     int temp = *a;
@@ -22,10 +23,10 @@ void swap(int *a, int *b) {
 
 //Print out a usage if args were incorrect, or args was help
 void print_usage(char *prog_name) {
-    fprintf(stderr, "Usage: %s (-r | -s=<X>) [-m=<MAX_RANGE>] [-o='file-name'] [-p='file-name2'] [-i=<NUM_OF_RUNS>] <N>\n", prog_name);
+    fprintf(stderr, "Usage: %s (-r | -s=<X>) [-m=<MAX_RANGE>] [-o='file-name'] [-p='file-name2'] [-i=<NUM_OF_RUNS>] [-f=<s|i|b|m|h|q>]<N>\n", prog_name);
     fprintf(stderr, "Gives the avg. execution time for Selection, Bubble, Insertion, Merge, Heap, and Quick sort on array specified by user.\n");
-    fprintf(stderr, "Examples: %s -r -m=32768 100\n", prog_name);
-    fprintf(stderr, "          %s -s=20 -o='test.csv' 1000\n", prog_name);
+    fprintf(stderr, "Examples: %s -r -m=32768 -p='tests' 100\n", prog_name);
+    fprintf(stderr, "          %s -s=20 -o='test.csv' -i=3 -f=hq 1000\n", prog_name);
 
     fprintf(stderr, "\n<N> = Number of integers to be sorted, must be positive.\n");
     fprintf(stderr, "<X> = The number the sequence starts from, must be positive.\n");
@@ -39,6 +40,7 @@ void print_usage(char *prog_name) {
     fprintf(stderr, "\t-o Outputs the result into a desired file type, .csv recommended for convenient table formatting.\n");
     fprintf(stderr, "\t-p Output array values before and after sorting, file-name should not include extensions for this.\n");
     fprintf(stderr, "\t-i Set the number of runs to calculate average for.\n");
+    fprintf(stderr, "\t-f Filter out the given sorting algorithms, s for selection, i for insertion and so on (can input multiple e.g. -f=ibh).\n");
 
 
     exit(1);
@@ -50,7 +52,7 @@ int main(int argc, char* argv[]) {
     int i;
     unsigned long int n=0, max_range = RAND_MAX;
     FILE* outfile = NULL;
-    char out_name[1000], arr_out_name[1000];
+    char out_name[1000], arr_out_name[1000], filter[100];
     seed = time(NULL);  //init seed value
 
     //Check for leading '-' in argv to see user specification
@@ -108,6 +110,34 @@ int main(int argc, char* argv[]) {
             case 'i':
                 if((sscanf(&(argv[i][2]), "=%d", &num_of_runs)) != 1) 
                     print_usage(argv[0]);
+                break;
+            case 'f':
+                if(( sscanf(&(argv[i][2]), "=%s", filter)) != 1) 
+                    print_usage(argv[0]);
+                for(char *s=filter; *s; s++) {
+                    switch(*s) {
+                        case 's':
+                            selection=0;
+                            break;  
+                        case 'i':
+                            insertion=0;
+                            break;  
+                        case 'b':
+                            bubble=0;
+                            break;  
+                        case 'm':
+                            merges=0;
+                            break;  
+                        case 'h':
+                            heap=0;
+                            break;  
+                        case 'q':
+                            quick=0;
+                            break;  
+                        default:
+                            print_usage(argv[0]);
+                    }
+                }
                 break;
             default:
                 print_usage(argv[0]);
