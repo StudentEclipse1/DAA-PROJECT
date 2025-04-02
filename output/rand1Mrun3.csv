@@ -1,0 +1,8 @@
+Result of the Experiment for RANDOM input: N=1000000
+Sorting Algorithm,Run 1,Avg. Time for N = 1000000
+Selection Sort,952.040744,952.040744
+Bubble Sort,2355.738694,2355.738694
+Insertion Sort,538.242525,538.242525
+Heap Sort,0.296546,0.296546
+Merge Sort,0.261541,0.261541
+Quick Sort,0.151448,0.151448

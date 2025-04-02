@@ -34,7 +34,8 @@ void print_usage(char *prog_name) {
     fprintf(stderr, "'file-name' = Output file destination, must contain no whitespace and can include an extension (e.g. test.csv).\n");
     fprintf(stderr, "<NUM_OF_RUNS> = The number of runs the program will calculate the average runtime for, default is 5.\n");
 
-    fprintf(stderr, "\n\t-r Assigns random values to array from the range [0, <MAX_RANGE>], by default MAX_RANGE=INT_MAX.\n");
+    fprintf(stderr, "\n(OPTIONS)\n");
+    fprintf(stderr, "\t-r Assigns random values to array from the range [0, <MAX_RANGE>], by default MAX_RANGE=INT_MAX.\n");
     fprintf(stderr, "\t-s Assigns the array with asequence of values starting from <X>.\n");
     fprintf(stderr, "\t-m Sets the limit for the array values.\n");
     fprintf(stderr, "\t-o Outputs the result into a desired file type, .csv recommended for convenient table formatting.\n");
@@ -109,6 +110,8 @@ int main(int argc, char* argv[]) {
                 break;
             case 'i':
                 if((sscanf(&(argv[i][2]), "=%d", &num_of_runs)) != 1) 
+                    print_usage(argv[0]);
+                if(num_of_runs<=0)
                     print_usage(argv[0]);
                 break;
             case 'f':

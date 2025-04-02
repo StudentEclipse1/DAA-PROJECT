@@ -299,6 +299,7 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
     printf("| Sorting Algorithm |");
     for(int i=0; i<num_of_runs; i++)
         printf("    Run %d    |", i+1);
+    printf(" Avg. Time for N = %lu\n", n);
     printf("+-------------------+");
     for(int i=0; i<num_of_runs; i++)
         printf("-------------+");

@@ -1,0 +1,8 @@
+Result of the Experiment for SEQUENCED input: N=1000000
+Sorting Algorithm,Run 1,Avg. Time for N = 1000000
+Selection Sort,967.150653,967.150653
+Bubble Sort,0.001875,0.001875
+Insertion Sort,0.002895,0.002895
+Heap Sort,0.215287,0.215287
+Merge Sort,0.178892,0.178892
+Quick Sort,0.066537,0.066537
