@@ -1,5 +1,0 @@
-Result of the Experiment for RANDOM input: N=100
-Sorting Algorithm,Run 1,Run 2,Run 3,Avg. Time for N = 100
-Selection Sort,0.000061,0.000613,0.000057,0.000244
-Insertion Sort,0.000033,0.000033,0.000033,0.000033
-Merge Sort,0.000081,0.000063,0.000061,0.000068

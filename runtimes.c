@@ -66,6 +66,7 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
             fprintf(outfile, "Run %d,", i+1);
         fprintf(outfile, "Avg. Time for N = %lu\n", n);
     }
+
     clock_t start, end;
     double cpu_time_used, total_used=0.0;
 
