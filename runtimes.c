@@ -39,15 +39,24 @@ void print_arr_to_file(int arr[], unsigned long n, FILE* out) {
     fprintf(out, "\n\n");
 }
 
-void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FILE* outfile, char* arr_out_name) {
+void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FILE* outfile, char* arr_out_name, int num_of_runs) {
     //Computes the execution time for the 6 sort algos on random array input
     //Prints a table to terminal
     FILE* arr_outfile=NULL;
     char sort_out_name[1000];
     printf("\tResult of the Experiment for RANDOM input: N=%lu\n", n);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
-    printf("| Sorting Algorithm |    Run 1    |    Run 2    |    Run 3    |    Run 4    |    Run 5    | Avg. Time for N = %lu\n", n);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
+    printf("| Sorting Algorithm |");
+    for(int i=0; i<num_of_runs; i++)
+        printf("    Run %d    |", i+1);
+    printf(" Avg. Time for N = %lu\n", n);
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");
     if(output_to_file) {
         fprintf(outfile, "Result of the Experiment for RANDOM input: N=%lu\n", n);
         fprintf(outfile, "Sorting Algorithm,Run 1,Run 2,Run 3,Run 4,Run 5,Avg. Time for N = %lu\n", n);
@@ -63,7 +72,7 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
         arr_outfile = fopen(sort_out_name, "w");
         fprintf(arr_outfile, "Selection Sort, N=%lu\n", n);
     }
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<num_of_runs; i++) {
         generate_n_randoms(arr, n, max_range);
         if(output_arr_to_file) {
             fprintf(arr_outfile, "Run %d Array:\n", i+1);
@@ -83,7 +92,10 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
     }
     printf("%lfs\n", total_used/5);
     if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
     total_used=0.0;
 
     printf("| Bubble Sort       | ");
@@ -94,7 +106,7 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
         arr_outfile = fopen(sort_out_name, "w");
         fprintf(arr_outfile, "Bubble Sort, N=%lu\n", n);
     }
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<num_of_runs; i++) {
         generate_n_randoms(arr, n, max_range);
         if(output_arr_to_file) {
             fprintf(arr_outfile, "Run %d Array:\n", i+1);
@@ -114,7 +126,10 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
     }
     printf("%lfs\n", total_used/5);
     if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
     total_used=0.0;
 
     printf("| Insertion Sort    | ");
@@ -125,7 +140,7 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
         arr_outfile = fopen(sort_out_name, "w");
         fprintf(arr_outfile, "Insertion Sort, N=%lu\n", n);
     }
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<num_of_runs; i++) {
         generate_n_randoms(arr, n, max_range);
         if(output_arr_to_file) {
             fprintf(arr_outfile, "Run %d Array:\n", i+1);
@@ -145,7 +160,10 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
     }
     printf("%lfs\n", total_used/5);
     if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
     total_used=0.0;
 
     printf("| Heap Sort         | ");
@@ -156,7 +174,7 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
         arr_outfile = fopen(sort_out_name, "w");
         fprintf(arr_outfile, "Heap Sort, N=%lu\n", n);
     }
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<num_of_runs; i++) {
         generate_n_randoms(arr, n, max_range);
         if(output_arr_to_file) {
             fprintf(arr_outfile, "Run %d Array:\n", i+1);
@@ -176,7 +194,10 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
     }
     printf("%lfs\n", total_used/5);
     if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
     total_used=0.0;
 
     printf("| Merge Sort        | ");
@@ -187,7 +208,7 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
         arr_outfile = fopen(sort_out_name, "w");
         fprintf(arr_outfile, "Merge Sort, N=%lu\n", n);
     }
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<num_of_runs; i++) {
         generate_n_randoms(arr, n, max_range);
         if(output_arr_to_file) {
             fprintf(arr_outfile, "Run %d Array:\n", i+1);
@@ -207,7 +228,10 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
     }
     printf("%lfs\n", total_used/5);
     if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
     total_used=0.0;
 
     printf("| Quick Sort        | ");
@@ -218,7 +242,7 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
         arr_outfile = fopen(sort_out_name, "w");
         fprintf(arr_outfile, "Quick Sort, N=%lu\n", n);
     }
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<num_of_runs; i++) {
         generate_n_randoms(arr, n, max_range);
         if(output_arr_to_file) {
             fprintf(arr_outfile, "Run %d Array:\n", i+1);
@@ -238,19 +262,30 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
     }
     printf("%lfs\n", total_used/5);
     if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
     total_used=0.0;
 }
 
-void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, FILE* outfile, char* arr_out_name) {
+void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, FILE* outfile, char* arr_out_name, int num_of_runs) {
     //Computes the execution time for the 6 sort algos on sequenced array input
     //Prints a table to terminal
     FILE* arr_outfile;
     char sort_out_name[1000];
     printf("\tResult of the Experiment for SEQUENCED input: N=%lu\n", n);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
-    printf("| Sorting Algorithm |    Run 1    |    Run 2    |    Run 3    |    Run 4    |    Run 5    | Avg. Time for N = %lu\n", n);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
+    printf("| Sorting Algorithm |");
+    for(int i=0; i<num_of_runs; i++)
+        printf("    Run %d    |", i+1);
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
     if(output_to_file) {
         fprintf(outfile, "Result of the Experiment for SEQUENCED input: N=%lu\n", n);
         fprintf(outfile, "Sorting Algorithm,Run 1,Run 2,Run 3,Run 4,Run 5,Avg. Time for N = %lu\n", n);
@@ -259,13 +294,14 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
     double cpu_time_used, total_used=0.0;
 
     printf("| Selection Sort    | ");
+    if(output_to_file) fprintf(outfile, "Selection Sort,");
     //Selection Sort
     if(output_arr_to_file) {
         sprintf(sort_out_name, "%s%s", arr_out_name, "_selection.txt");
         arr_outfile = fopen(sort_out_name, "w");
         fprintf(arr_outfile, "Selection Sort, N=%lu\n", n);
     }
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<num_of_runs; i++) {
         generate_n_sequence(arr, n, seq_start);
         if(output_arr_to_file) {
             fprintf(arr_outfile, "Run %d Array:\n", i+1);
@@ -285,7 +321,10 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
     }
     printf("%lfs\n", total_used/5);
     if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
     total_used=0.0;
 
     printf("| Bubble Sort       | ");
@@ -296,7 +335,7 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
         arr_outfile = fopen(sort_out_name, "w");
         fprintf(arr_outfile, "Bubble Sort, N=%lu\n", n);
     }
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<num_of_runs; i++) {
         generate_n_sequence(arr, n, seq_start);
         if(output_arr_to_file) {
             fprintf(arr_outfile, "Run %d Array:\n", i+1);
@@ -316,17 +355,21 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
     }
     printf("%lfs\n", total_used/5);
     if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
     total_used=0.0;
 
     printf("| Insertion Sort    | ");
+    if(output_to_file) fprintf(outfile, "Insertion Sort,");
     //Insertion Sort
     if(output_arr_to_file) {
         sprintf(sort_out_name, "%s%s", arr_out_name, "_insertion.txt");
         arr_outfile = fopen(sort_out_name, "w");
         fprintf(arr_outfile, "Insertion Sort, N=%lu\n", n);
     }
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<num_of_runs; i++) {
         generate_n_sequence(arr, n, seq_start);
         if(output_arr_to_file) {
             fprintf(arr_outfile, "Run %d Array:\n", i+1);
@@ -346,17 +389,21 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
     }
     printf("%lfs\n", total_used/5);
     if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
     total_used=0.0;
 
     printf("| Heap Sort         | ");
+    if(output_to_file) fprintf(outfile, "Heap Sort,");
     //Heap Sort
     if(output_arr_to_file) {
         sprintf(sort_out_name, "%s%s", arr_out_name, "_heap.txt");
         arr_outfile = fopen(sort_out_name, "w");
         fprintf(arr_outfile, "Heap Sort, N=%lu\n", n);
     }
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<num_of_runs; i++) {
         generate_n_sequence(arr, n, seq_start);
         if(output_arr_to_file) {
             fprintf(arr_outfile, "Run %d Array:\n", i+1);
@@ -376,17 +423,21 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
     }
     printf("%lfs\n", total_used/5);
     if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
     total_used=0.0;
 
     printf("| Merge Sort        | ");
+    if(output_to_file) fprintf(outfile, "Merge Sort,");
     //Merge Sort
     if(output_arr_to_file) {
         sprintf(sort_out_name, "%s%s", arr_out_name, "_merge.txt");
         arr_outfile = fopen(sort_out_name, "w");
         fprintf(arr_outfile, "Merge Sort, N=%lu\n", n);
     }
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<num_of_runs; i++) {
         generate_n_sequence(arr, n, seq_start);
         if(output_arr_to_file) {
             fprintf(arr_outfile, "Run %d Array:\n", i+1);
@@ -406,17 +457,21 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
     }
     printf("%lfs\n", total_used/5);
     if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
     total_used=0.0;
 
     printf("| Quick Sort        | ");
+    if(output_to_file) fprintf(outfile, "Quick Sort,");
     //QuickSort
     if(output_arr_to_file) {
         sprintf(sort_out_name, "%s%s", arr_out_name, "_quick.txt");
         arr_outfile = fopen(sort_out_name, "w");
         fprintf(arr_outfile, "Quick Sort, N=%lu\n", n);
     }
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<num_of_runs; i++) {
         generate_n_sequence(arr, n, seq_start);
         if(output_arr_to_file) {
             fprintf(arr_outfile, "Run %d Array:\n", i+1);
@@ -436,6 +491,9 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
     }
     printf("%lfs\n", total_used/5);
     if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
-    printf("+-------------------+-------------+-------------+-------------+-------------+-------------+\n");
+    printf("+-------------------+");
+    for(int i=0; i<num_of_runs; i++)
+        printf("-------------+");
+    printf("\n");;
     total_used=0.0;
 }
