@@ -9,6 +9,9 @@
 #include "Sorting Headers/BubbleSort.h"
 #include "runtimes.h"
 
+int output_to_file=0, output_arr_to_file=0;
+unsigned int seed;
+
 void swap(int *a, int *b) {
     int temp = *a;
     *a = *b;
@@ -18,7 +21,7 @@ void swap(int *a, int *b) {
 //Assigns random values to arr from the range [0, max_range]
 //max_range is inclusive, by default it is RAND_MAX defined in stdlib.h (usually same as INT_MAX)
 void generate_n_randoms(int arr[], unsigned long int n, unsigned long int max_range) {
-    srand(time(NULL));  //Give rand() a new seed each time this is called.
+    srand(seed++);  //Give rand() a new seed each time this is called.
     if(max_range > RAND_MAX) {
         fprintf(stderr, "Max range input is larger than the max for Random Integers (%d)\n", RAND_MAX);
         exit(1);
@@ -44,31 +47,33 @@ void print_arr(int arr[], int n) {
 
 //Print out a usage if args were incorrect, or args was help
 void print_usage(char *prog_name) {
-    fprintf(stderr, "Usage: %s (-r | -s=<X>) [-m=<MAX_RANGE>] [-o=\"file-name\"] <N>\n", prog_name);
+    fprintf(stderr, "Usage: %s (-r | -s=<X>) [-m=<MAX_RANGE>] [-o='file-name'] [-p='file-name2'] <N>\n", prog_name);
     fprintf(stderr, "Gives the avg. execution time for Selection, Bubble, Insertion, Merge, Heap, and Quick sort on array specified by user.\n");
     fprintf(stderr, "Examples: %s -r -m=32768 100\n", prog_name);
-    fprintf(stderr, "          %s -s=20 1000\n", prog_name);
-//    fprintf(stderr, "Default: Array with N random values from range [0, INT_MAX] \n");
+    fprintf(stderr, "          %s -s=20 -o='test.csv' 1000\n", prog_name);
 
-    fprintf(stderr, "\n<N> = Number of integers to be sorted\n");
+    fprintf(stderr, "\n<N> = Number of integers to be sorted, must be positive.\n");
     fprintf(stderr, "<X> = The number the sequence starts from, must be positive.\n");
     fprintf(stderr, "<MAX_RANGE> = Specified max_range for array values, can be any positive number from 1 to INT_MAX.\n");
     fprintf(stderr, "\"file-name\" = Output file destination, must contain no whitespace and can include an extension (e.g. test.csv).\n");
+
     fprintf(stderr, "\n\t-r Assigns random values to array from the range [0, <MAX_RANGE>], by default MAX_RANGE=INT_MAX.\n");
     fprintf(stderr, "\t-s Assigns the array with asequence of values starting from <X>.\n");
     fprintf(stderr, "\t-m Sets the limit for the array values.\n");
     fprintf(stderr, "\t-o Outputs the result into a desired file type, .csv recommended for convenient table formatting.\n");
+    fprintf(stderr, "\t-p Output array values before and after sorting, file-name should not include extensions for this.");
 
     exit(1);
 }
 
 int main(int argc, char* argv[]) {
     int *arr, seq_start=1;
-    int is_random=0, is_sequenced=0, output_to_file=0;
+    int is_random=0, is_sequenced=0;
     int i;
     unsigned long int n, max_range = RAND_MAX;
     FILE* outfile = NULL;
-    char out_name[1000];
+    char out_name[1000], arr_out_name[1000];
+    seed = time(NULL);  //init seed value
 
     //Check for leading '-' in argv to see user specification
     for(i=1; i<argc; i++) {
@@ -96,7 +101,11 @@ int main(int argc, char* argv[]) {
                 //Get the sequence start after the '=' sign
                 if((sscanf(&(argv[i][2]), "=%d", &seq_start)) != 1) 
                     print_usage(argv[0]);
-                
+                if(n+seq_start > __INT_MAX__) {
+                    fprintf(stderr, "Input cannot have N + X > INT+MAX (%d).\n", __INT_MAX__);
+                    exit(1);
+                }
+
                 break;
             case 'm':
                 //Get the max range after the '=' sign
@@ -111,6 +120,12 @@ int main(int argc, char* argv[]) {
                     print_usage(argv[0]);
                 }
                 outfile = fopen(out_name, "w");
+                break;
+            case 'p':
+                output_arr_to_file=1;
+                if(( sscanf(&(argv[i][2]), "=%[^']", arr_out_name)) != 1)  {
+                    print_usage(argv[0]);
+                }
                 break;
             default:
                 print_usage(argv[0]);
@@ -132,14 +147,13 @@ int main(int argc, char* argv[]) {
     }
 
     arr = malloc(sizeof(int)*n);
-    printf("Hello, World!, Max Range: %lu\n", max_range);
 
     if(is_random) {
-        generate_random_runtimes(arr, n, max_range, output_to_file, outfile);
+        generate_random_runtimes(arr, n, max_range, outfile, arr_out_name);
     }
 
     if(is_sequenced) {
-        generate_sequenced_runtimes(arr, n, seq_start, output_to_file, outfile);
+        generate_sequenced_runtimes(arr, n, seq_start, outfile, arr_out_name);
     }
 
     fclose(outfile);
