@@ -138,6 +138,7 @@ int main(int argc, char* argv[]) {
         generate_sequenced_runtimes(arr, n, seq_start, outfile, arr_out_name, num_of_runs);
     }
 
-    fclose(outfile);
+    if(outfile)
+        fclose(outfile);
     return 0;
 }

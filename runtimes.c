@@ -90,8 +90,8 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
         if(output_to_file) fprintf(outfile, "%lf,", cpu_time_used);
         total_used += cpu_time_used;
     }
-    printf("%lfs\n", total_used/5);
-    if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
+    printf("%lfs\n", total_used/((double) (num_of_runs)));
+    if(output_to_file) fprintf(outfile, "%lf\n", total_used/((double) (num_of_runs)));
     printf("+-------------------+");
     for(int i=0; i<num_of_runs; i++)
         printf("-------------+");
@@ -124,8 +124,8 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
         if(output_to_file) fprintf(outfile, "%lf,", cpu_time_used);
         total_used += cpu_time_used;
     }
-    printf("%lfs\n", total_used/5);
-    if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
+    printf("%lfs\n", total_used/((double) (num_of_runs)));
+    if(output_to_file) fprintf(outfile, "%lf\n", total_used/((double) (num_of_runs)));
     printf("+-------------------+");
     for(int i=0; i<num_of_runs; i++)
         printf("-------------+");
@@ -158,8 +158,8 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
         if(output_to_file) fprintf(outfile, "%lf,", cpu_time_used);
         total_used += cpu_time_used;
     }
-    printf("%lfs\n", total_used/5);
-    if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
+    printf("%lfs\n", total_used/((double) (num_of_runs)));
+    if(output_to_file) fprintf(outfile, "%lf\n", total_used/((double) (num_of_runs)));
     printf("+-------------------+");
     for(int i=0; i<num_of_runs; i++)
         printf("-------------+");
@@ -192,8 +192,8 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
         if(output_to_file) fprintf(outfile, "%lf,", cpu_time_used);
         total_used += cpu_time_used;
     }
-    printf("%lfs\n", total_used/5);
-    if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
+    printf("%lfs\n", total_used/((double) (num_of_runs)));
+    if(output_to_file) fprintf(outfile, "%lf\n", total_used/((double) (num_of_runs)));
     printf("+-------------------+");
     for(int i=0; i<num_of_runs; i++)
         printf("-------------+");
@@ -226,8 +226,8 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
         if(output_to_file) fprintf(outfile, "%lf,", cpu_time_used);
         total_used += cpu_time_used;
     }
-    printf("%lfs\n", total_used/5);
-    if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
+    printf("%lfs\n", total_used/((double) (num_of_runs)));
+    if(output_to_file) fprintf(outfile, "%lf\n", total_used/((double) (num_of_runs)));
     printf("+-------------------+");
     for(int i=0; i<num_of_runs; i++)
         printf("-------------+");
@@ -260,8 +260,8 @@ void generate_random_runtimes(int arr[], unsigned long int n, int max_range, FIL
         if(output_to_file) fprintf(outfile, "%lf,", cpu_time_used);
         total_used += cpu_time_used;
     }
-    printf("%lfs\n", total_used/5);
-    if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
+    printf("%lfs\n", total_used/((double) (num_of_runs)));
+    if(output_to_file) fprintf(outfile, "%lf\n", total_used/((double) (num_of_runs)));
     printf("+-------------------+");
     for(int i=0; i<num_of_runs; i++)
         printf("-------------+");
@@ -319,8 +319,8 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
         if(output_to_file) fprintf(outfile, "%lf,", cpu_time_used);
         total_used += cpu_time_used;
     }
-    printf("%lfs\n", total_used/5);
-    if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
+    printf("%lfs\n", total_used/((double) (num_of_runs)));
+    if(output_to_file) fprintf(outfile, "%lf\n", total_used/((double) (num_of_runs)));
     printf("+-------------------+");
     for(int i=0; i<num_of_runs; i++)
         printf("-------------+");
@@ -353,8 +353,8 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
         if(output_to_file) fprintf(outfile, "%lf,", cpu_time_used);
         total_used += cpu_time_used;
     }
-    printf("%lfs\n", total_used/5);
-    if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
+    printf("%lfs\n", total_used/((double) (num_of_runs)));
+    if(output_to_file) fprintf(outfile, "%lf\n", total_used/((double) (num_of_runs)));
     printf("+-------------------+");
     for(int i=0; i<num_of_runs; i++)
         printf("-------------+");
@@ -387,8 +387,8 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
         if(output_to_file) fprintf(outfile, "%lf,", cpu_time_used);
         total_used += cpu_time_used;
     }
-    printf("%lfs\n", total_used/5);
-    if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
+    printf("%lfs\n", total_used/((double) (num_of_runs)));
+    if(output_to_file) fprintf(outfile, "%lf\n", total_used/((double) (num_of_runs)));
     printf("+-------------------+");
     for(int i=0; i<num_of_runs; i++)
         printf("-------------+");
@@ -421,8 +421,8 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
         if(output_to_file) fprintf(outfile, "%lf,", cpu_time_used);
         total_used += cpu_time_used;
     }
-    printf("%lfs\n", total_used/5);
-    if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
+    printf("%lfs\n", total_used/((double) (num_of_runs)));
+    if(output_to_file) fprintf(outfile, "%lf\n", total_used/((double) (num_of_runs)));
     printf("+-------------------+");
     for(int i=0; i<num_of_runs; i++)
         printf("-------------+");
@@ -455,8 +455,8 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
         if(output_to_file) fprintf(outfile, "%lf,", cpu_time_used);
         total_used += cpu_time_used;
     }
-    printf("%lfs\n", total_used/5);
-    if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
+    printf("%lfs\n", total_used/((double) (num_of_runs)));
+    if(output_to_file) fprintf(outfile, "%lf\n", total_used/((double) (num_of_runs)));
     printf("+-------------------+");
     for(int i=0; i<num_of_runs; i++)
         printf("-------------+");
@@ -489,8 +489,8 @@ void generate_sequenced_runtimes(int arr[], unsigned long int n, int seq_start, 
         if(output_to_file) fprintf(outfile, "%lf,", cpu_time_used);
         total_used += cpu_time_used;
     }
-    printf("%lfs\n", total_used/5);
-    if(output_to_file) fprintf(outfile, "%lf\n", total_used/5);
+    printf("%lfs\n", total_used/((double) (num_of_runs)));
+    if(output_to_file) fprintf(outfile, "%lf\n", total_used/((double) (num_of_runs)));
     printf("+-------------------+");
     for(int i=0; i<num_of_runs; i++)
         printf("-------------+");
