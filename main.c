@@ -18,33 +18,6 @@ void swap(int *a, int *b) {
     *b = temp;
 }
 
-//Assigns random values to arr from the range [0, max_range]
-//max_range is inclusive, by default it is RAND_MAX defined in stdlib.h (usually same as INT_MAX)
-void generate_n_randoms(int arr[], unsigned long int n, unsigned long int max_range) {
-    srand(seed++);  //Give rand() a new seed each time this is called.
-    if(max_range > RAND_MAX) {
-        fprintf(stderr, "Max range input is larger than the max for Random Integers (%d)\n", RAND_MAX);
-        exit(1);
-    }
-    for(unsigned long i=0; i<n; i++) {
-        arr[i] = rand() % max_range+1;      //Uses function rand() from stdlib.h
-    }
-}
-
-//Assigns values to arr in a sequence starting from X to n.
-void generate_n_sequence(int arr[], unsigned long int n, int X) {
-    for(unsigned long i=0; i<n; i++) {
-        arr[i] = X+i;
-    }
-}
-
-void print_arr(int arr[], int n) {
-    for(int i=0; i<n; i++) {
-        printf("%d, ", arr[i]);
-    }
-    printf("\b\b \n");
-}
-
 //Print out a usage if args were incorrect, or args was help
 void print_usage(char *prog_name) {
     fprintf(stderr, "Usage: %s (-r | -s=<X>) [-m=<MAX_RANGE>] [-o='file-name'] [-p='file-name2'] <N>\n", prog_name);
