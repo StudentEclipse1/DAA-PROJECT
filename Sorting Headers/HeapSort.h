@@ -26,14 +26,10 @@ void buildMaxHeap(int array[], int n){
 }
 
 void heapSort(int array[], int size){
-
     buildMaxHeap(array, size);
-    int heapSize = size-1;
 
-
-    for (int i= heapSize ; i>0; i--){
+    for (int i=size-1 ; i>0; i--){
         swap(&array[i], &array[0]);
-        heapSize--;
-        maxHeapify(array, 0, heapSize);
+        maxHeapify(array, 0, i);
     }
 }
